@@ -1,0 +1,29 @@
+﻿@page
+@model Campus_Connect.Views.LoginRegister.LoginModel
+@{
+    Layout = null;
+}
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Campus_Connect.styles.css" asp-append-version="true" />
+</head>
+<div class="form-container">
+    <img src="~/images/C.png"class="login-img"/>
+    <form class="login-form" method="post">
+        <fieldset>
+            <legend>Login</legend>
+            <label for="Email">
+                Email: <input id="Email" class="form-input" placeholder="Email Address" type="email" />
+            </label>
+            <br />
+            <label for="Password">
+                Password: <input id="Password" class="form-input" placeholder="Password" type="password" />
+            </label>
+        </fieldset>
+         <button class="loginBtn" type="submit">Login</button>
+    </form>
+    <a class="signUpBtn" asp-area="" asp-action="SignUp" asp-controller="LoginRegister" >
+        Register
+    </a>
+</div>
