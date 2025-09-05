@@ -1,3 +1,4 @@
+using Campus_Connect.Services;
 using FirebaseAdmin;
 using Google.Apis.Auth;
 using Google.Apis.Auth.OAuth2;
@@ -6,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddHttpClient<FirebaseServices>();
+builder.Services.AddSession();
 
 
 var app = builder.Build();
@@ -31,7 +33,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
-
+app.UseSession();
 app.MapStaticAssets();
 
 app.MapControllerRoute(

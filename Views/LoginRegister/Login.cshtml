@@ -10,15 +10,15 @@
 </head>
 <div class="form-container">
     <img src="~/images/C.png"class="login-img"/>
-    <form class="login-form" method="post">
+    <form class="login-form" method="post" asp-action="Login" asp-asp-controller="LoginRegister">
         <fieldset>
             <legend>Login</legend>
             <label for="Email">
-                Email: <input id="Email" class="form-input" placeholder="Email Address" type="email" />
+                Email: <input name="Email" id="Email" class="form-input" placeholder="Email Address" type="email" />
             </label>
             <br />
             <label for="Password">
-                Password: <input id="Password" class="form-input" placeholder="Password" type="password" />
+                Password: <input name="Password" id="Password" class="form-input" placeholder="Password" type="password" />
             </label>
         </fieldset>
          <button class="loginBtn" type="submit">Login</button>

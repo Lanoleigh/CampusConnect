@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Ignore user secrets
+appsettings.Development.json
+appsettings.*.local.json
+
+/Campus Connect/Keys/

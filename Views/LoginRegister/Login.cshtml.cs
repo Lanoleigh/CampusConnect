@@ -8,5 +8,6 @@ namespace Campus_Connect.Views.LoginRegister
         public void OnGet()
         {
         }
+
     }
 }

@@ -3,6 +3,8 @@ using FirebaseAdmin.Auth;
 using Firebase.Database;
 using Microsoft.AspNetCore.Mvc;
 using Firebase.Database.Query;
+using System.Net.Http.Json;
+using Campus_Connect.Services;
 
 namespace Campus_Connect.Controllers
 {
@@ -10,16 +12,36 @@ namespace Campus_Connect.Controllers
     {
         private readonly FirebaseAuth auth;
         private readonly FirebaseClient _db;
+        private readonly FirebaseServices _firebaseService;
 
-        public LoginRegisterController()
+        public LoginRegisterController(FirebaseServices firebaseServices)
         {
             auth = FirebaseAuth.DefaultInstance;
             _db = new FirebaseClient("https://campus-connect-14d4f-default-rtdb.firebaseio.com/");
+            _firebaseService = firebaseServices;
         }
 
         public IActionResult Login()
         {
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginDto loginBto)
+        {
+            var returnUrl = Request.Headers["Referer"].ToString();
+
+            var token = await _firebaseService.LoginAsync(loginBto.Email, loginBto.Password);
+
+            if(token == null)
+            {
+                return Redirect(returnUrl);
+            }
+            var decoded = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(token);
+            var LoggedInUserId = decoded.Uid;
+            HttpContext.Session.SetString("uId", LoggedInUserId);
+
+            return RedirectToAction("Index", "Home");
+
         }
         public IActionResult SignUp()
         {
@@ -78,11 +100,6 @@ namespace Campus_Connect.Controllers
 
         }
     }
-    class AuthUser
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Username { get; set; }
-    }
+
     
 }
