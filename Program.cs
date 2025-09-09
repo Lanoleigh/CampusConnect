@@ -2,6 +2,7 @@ using Campus_Connect.Services;
 using FirebaseAdmin;
 using Google.Apis.Auth;
 using Google.Apis.Auth.OAuth2;
+using Google.Cloud.Storage.V1;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<FirebaseServices>();
 builder.Services.AddSession();
+builder.Services.AddScoped<CommunityFeedService>();
 
 
 var app = builder.Build();
@@ -21,6 +23,8 @@ if(FirebaseApp.DefaultInstance == null)
         Credential = GoogleCredential.FromFile("keys/campus-connect-key.json")
     });
 }
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

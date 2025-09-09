@@ -1,8 +1,11 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    pass through the list of communities to this page to gather which community the user is apart of
 *@
 @{
 }
+@model Campus_Connect.ViewModels.CommunityViewModel
+
 <div class="feed-page">
     <div class="add-post-column">
         <form enctype="multipart/form-data" method="post" asp-action="CreateNewPost" asp-controller="Post">
@@ -12,22 +15,23 @@
             <label>
                 Post Type:
                 <select name="PostType">
-                    <option>Question</option>
-                    <option>Idea</option>
-                    <option>Study Tips</option>
-                    <option>Resource Material</option>
+                    <option value="Question" >Question</option>
+                    <option value="Idea">Idea</option>
+                    <option value="Study Tips">Study Tips</option>
+                    <option value="Resource Material">Resource Material</option>
                 </select>
             </label>
             <label>
                 Additional Notes:
-                <textarea name="AdditionalNotes">
+                <textarea name="AdditionalMessage">
 
                 </textarea>
             </label>
             <label>
                 Visibility:
                 <select name="Visibility">
-                    <option></option>
+                    <option value="@Model.CommunityJoined.CommunityID">@Model.CommunityJoined.FacultyName</option>
+                    <option value="public">Public</option>
                 </select>
             </label>
             <label>

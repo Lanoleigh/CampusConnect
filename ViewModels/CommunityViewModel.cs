@@ -1,10 +1,12 @@
 ﻿using Campus_Connect.Models;
+using FirebaseAdmin.Auth;
 
 namespace Campus_Connect.ViewModels
 {
     public class CommunityViewModel
     {
-        public User currentUser { get; set; }
-        public List<Community> communities { get; set; }
+        public UserRecord User { get; set; }
+        public List<InterestGroup>? InterestGroups { get; set; }
+        public Community CommunityJoined { get; set; }
     }
 }

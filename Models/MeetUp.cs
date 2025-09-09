@@ -8,5 +8,6 @@
         public string Description { get; set; }
         public DateOnly Date { get; set; }
         public TimeOnly Time { get; set; }
+        public List<string> UserIds { get; set; }
     }
 }

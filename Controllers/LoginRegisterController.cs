@@ -37,6 +37,7 @@ namespace Campus_Connect.Controllers
                 return Redirect(returnUrl);
             }
             var decoded = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(token);
+            FirebaseAuth.DefaultInstance.GetUserAsync(decoded.Uid);
             var LoggedInUserId = decoded.Uid;
             HttpContext.Session.SetString("uId", LoggedInUserId);
 
