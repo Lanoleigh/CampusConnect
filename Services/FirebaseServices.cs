@@ -1,6 +1,8 @@
 ﻿namespace Campus_Connect.Services
 {
-using FirebaseAdmin;
+    using Firebase.Database;
+    using Firebase.Database.Query;
+    using FirebaseAdmin;
     using System.Net.Http.Json;
 
 
@@ -8,9 +10,11 @@ using FirebaseAdmin;
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiKey;
+        private readonly FirebaseClient _db = new FirebaseClient("https://campus-connect-14d4f-default-rtdb.firebaseio.com/");
 
-        public FirebaseServices(HttpClient httpClient, IConfiguration config) {
-        
+        public FirebaseServices(HttpClient httpClient, IConfiguration config)
+        {
+
             _httpClient = httpClient;
             _apiKey = config["Firebase:ApiKey"];
         }
@@ -28,10 +32,29 @@ using FirebaseAdmin;
 
             if (response.IsSuccessStatusCode)
             {
-                var json = await response.Content.ReadFromJsonAsync<Dictionary<string,object>>();
+                var json = await response.Content.ReadFromJsonAsync<Dictionary<string, object>>();
                 return json["idToken"].ToString();
             }
             return null;
+        }
+
+        public async Task<bool> AddUserToCommmunity(string userID, string communityID)
+        {
+            try
+            {
+                await _db
+                    .Child("Communities")
+                    .Child(communityID)
+                    .Child("Users")
+                    .Child(userID)
+                    .PutAsync(true);
+                return true;
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        
         }
     }
 }

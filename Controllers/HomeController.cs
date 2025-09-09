@@ -17,7 +17,6 @@ namespace Campus_Connect.Controllers
         {
             return View();
         }
-
         public IActionResult Privacy()
         {
             return View();

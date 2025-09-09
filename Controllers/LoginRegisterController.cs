@@ -49,48 +49,62 @@ namespace Campus_Connect.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> Register(User user) {
+            bool userAddedCommunity = false;
             var returnUrl = Request.Headers["Referer"].ToString();
             if (ModelState.IsValid) 
             {
-                string userNumber = user.PhoneNumber.Insert(1, "+27");
-                userNumber = userNumber.Remove(0,1);
-                try
+                if (user.Password.Equals(user.ConfirmedPassword))
                 {
-                    var userRecordArgs = new UserRecordArgs()
+                    string userNumber = user.PhoneNumber.Insert(1, "+27");
+                    userNumber = userNumber.Remove(0, 1);
+                    try
                     {
-                        Email = user.Email,
-                        EmailVerified = false,
-                        Password = user.Password,
-                        PhoneNumber = userNumber,
-                        DisplayName = String.Concat(user.Name, user.Surname),
-                        Disabled = false
-                    };
-                    var registerdUser = await auth.CreateUserAsync(userRecordArgs);
+                        var userRecordArgs = new UserRecordArgs()
+                        {
+                            Email = user.Email,
+                            EmailVerified = false,
+                            Password = user.Password,
+                            PhoneNumber = userNumber,
+                            DisplayName = String.Concat(user.Name," ", user.Surname),
+                            Disabled = false
+                        };
+                        var registerdUser = await auth.CreateUserAsync(userRecordArgs);
 
-                    if (registerdUser != null)
-                    {
+                        if (registerdUser != null)
+                        {
 
-                        await _db
-                            .Child("Users")
-                            .Child(registerdUser.Uid)
-                            .PutAsync(new
+                            await _db
+                                .Child("Users")
+                                .Child(registerdUser.Uid)
+                                .PutAsync(new
+                                {
+                                    Name = user.Name,
+                                    Surname = user.Surname,
+                                    Email = user.Email,
+                                    PhoneNumber = userNumber,
+                                    Faculty = user.Faculty,
+                                    CreatedAt = DateTime.UtcNow
+                                });
+
+                            //add user to the community before redirection
+                            userAddedCommunity = await _firebaseService.AddUserToCommmunity(registerdUser.Uid, user.Faculty);
+
+                            if (registerdUser != null & userAddedCommunity == true)
                             {
-                                Name = user.Name,
-                                Surname = user.Surname,
-                                Email = user.Email,
-                                PhoneNumber = userNumber,
-                                CreatedAt = DateTime.UtcNow
-                            });
+                                return RedirectToAction("Login", "LoginRegister");
+                            }
+                        }
 
-                       return RedirectToAction("Login","LoginRegister");
                     }
-
-
-                    
+                    catch (Exception ex)
+                    {
+                        ViewBag.Error = ex.Message;
+                        return Redirect(returnUrl);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    ViewBag.Error = ex.Message;
+                    TempData["PasswordError"] = "Passwords did not match";
                     return Redirect(returnUrl);
                 }
             }

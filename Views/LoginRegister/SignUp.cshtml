@@ -3,7 +3,11 @@
 @{
     Layout = null;
 }
-
+@if(TempData["PasswordError"] != null){
+    <div class="alert-warning">
+        @TempData["PasswordError"];
+    </div>
+}
 <form method="post" asp-area="" asp-action="Register" asp-controller="LoginRegister">
     <fieldset>
         <legend>Register</legend>
@@ -21,6 +25,17 @@
         <br />
         <label>
             Phone Number: <input class="form-input" id="PhoneNumber" type="tel" maxlength="10" name="PhoneNumber" />
+        </label>
+        <br />
+        <label>
+            Faculty: 
+            <select name="Faculty" class="form-input">
+                <option selected value="C001">IIE Faculty of Commerce</option>
+                <option value="C002">IIE Faculty of Humanities</option>
+                <option value="C003">IIE Faculty of Law</option>
+                <option value="C004">IIE Faculty of Education</option>
+                <option value="C005">IIE Faculty of Science and Technology</option>
+            </select>
         </label>
         <br />
         <label>
