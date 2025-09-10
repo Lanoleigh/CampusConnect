@@ -58,9 +58,18 @@ namespace Campus_Connect.Controllers
                     newPost.FileUrl = $"https://firebasestorage.googleapis.com/v0/b/{bucket}/o/{Uri.EscapeDataString(fileName)}?alt=media";
                     
                 }
-                newPost.PostDate = DateTime.Now;
+                var fbPost = new FirebasePost();
+                fbPost.UserID = uId;
+                fbPost.AdditionalMessage = newPost.AdditionalMessage;
+                fbPost.Title = newPost.Title;
+                fbPost.FileUrl = newPost.FileUrl;
+                fbPost.Visibility = newPost.Visibility;
+                fbPost.PostDate = DateTime.Now;
+
+
+               
                 await _db.Child("Posts")
-                    .PostAsync(newPost);
+                    .PostAsync(fbPost);
             }
 
 

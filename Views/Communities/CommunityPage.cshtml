@@ -5,3 +5,39 @@
 *@
 @{
 }
+@model Campus_Connect.ViewModels.InterestGroupViewModel
+<div class="interest-container">
+    @if(TempData["Failure"] != null){
+        <div class="alert-warning">
+            <p>@TempData["Failure"]</p>
+        </div>
+    }
+    else if (TempData["Success"] != null)
+    {
+        <div class="alert-success">
+            <p>@TempData["Success"]</p>
+        </div>
+    }
+    @foreach(var group in Model.InterestGroups ?? new List<InterestGroup>()){
+        if (group == null) continue;
+        var users = group.Users ?? new Dictionary<string, bool>();
+        <div class="group-card">
+
+               <h3>@group.Name</h3>
+               <p>@group.Description</p>
+               <p>Members: @users.Count</p>
+          
+               @if(users.ContainsKey(Model.User.Uid)){ @* User belongs to this interest group alread *@
+                    <div class="joinComBtn">
+                        <button class="alrJoinedBtn" type="submit">Joined</button>
+                    </div>
+               }else{
+                    <form class="joinComBtn" asp-action="joinGroup" asp-route-groupId="@group.ID" asp-route-userId="@Model.User.Uid">
+                        <button type="submit">Join</button>
+                    </form>
+               }
+
+           </div>
+       
+   }
+</div>

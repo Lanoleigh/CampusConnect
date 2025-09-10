@@ -143,3 +143,59 @@ fieldset {
     border: 1px solid #ccc;
     border-top: none;
 }
+/*styling for interestGroups*/
+.group-card {
+    background-color: #ffffff; /* white card background */
+    border-radius: 12px; /* rounded corners */
+    padding: 20px; /* spacing inside the card */
+    margin: 15px 0; /* spacing between cards */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* subtle shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .group-card:hover {
+        transform: translateY(-4px); /* lift on hover */
+        box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+    }
+
+    .group-card h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+        color: #333333;
+    }
+
+    .group-card p {
+        margin: 5px 0;
+        color: #555555;
+        line-height: 1.5;
+    }
+
+    .group-card .joinComBtn {
+        margin-top: 15px;
+    }
+
+    .group-card button {
+        padding: 10px 18px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.2s ease;
+    }
+
+        .group-card button[type="submit"] {
+            background-color: #007bff; /* primary blue */
+            color: #fff;
+        }
+
+            .group-card button[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+
+    .group-card .alrJoinedBtn {
+        background-color: #28a745; /* green */
+        color: #fff;
+        cursor: default;
+        opacity: 0.9;
+    }

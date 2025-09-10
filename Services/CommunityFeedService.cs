@@ -51,27 +51,38 @@ namespace Campus_Connect.Services
             List<InterestGroup> myGroups = new List<InterestGroup>();
             foreach(var intGroup in iGroups)
             {
-                if (intGroup.Users.Contains(userID))
+                if (intGroup != null && intGroup.Users != null && intGroup.Users.ContainsKey(userID))
                 {
                     myGroups.Add(intGroup);
                 }
             }
+            myGroups.RemoveAll(x => x == null);
            
                 var posts = await _db
                     .Child("Posts")
-                    .OnceAsync<Post>();
-                List<Post> allPosts = posts
+                    .OnceAsync<FirebasePost>();
+                List<FirebasePost> allPosts = posts
                     .Select(post => post.Object)
                     .ToList();
 
-               
 
+            var allMeetUps = await _db.Child("MeetUps").OnceAsync<MeetUp>();
+            
+            var meetUps = allMeetUps
+                .Select(m => m.Object)
+                .Where(m =>
+                m.relatedID == joinedCommunity.CommunityID ||
+                myGroups.Any(g => g.ID == m.relatedID)
+                )
+                .ToList();
 
+            
 
             commVM.User = currentUser;
             commVM.CommunityJoined = joinedCommunity;
             commVM.InterestGroups = myGroups;//return all interest groups and we can filter it afterwards
             commVM.Posts = allPosts;
+            commVM.meetUps = meetUps;
 
 
             return commVM;

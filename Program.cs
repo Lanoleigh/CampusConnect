@@ -11,6 +11,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<FirebaseServices>();
 builder.Services.AddSession();
 builder.Services.AddScoped<CommunityFeedService>();
+builder.Services.AddScoped<InterestGroupService>();
 
 
 var app = builder.Build();

@@ -11,38 +11,38 @@
         <form enctype="multipart/form-data" method="post" asp-action="CreateNewPost" asp-controller="Post">
             <fieldset>
                 <legend>Add a new post</legend>
-                    <label>
-                        Title: <input class="form-input" type="text" name="Title" placeholder="Post Title" />
-                    </label>
-                    <label>
-                        Post Type:
-                        <select name="PostType">
-                            <option value="Question" >Question</option>
-                            <option value="Idea">Idea</option>
-                            <option value="Study Tips">Study Tips</option>
-                            <option value="Resource Material">Resource Material</option>
-                        </select>
-                    </label>
-                    <label>
-                        Additional Notes:
-                        <textarea style="width:100px;height:70px;" maxlength="150" name="AdditionalMessage"></textarea>
-                    </label>
-                    <label>
-                        Visibility:
-                        <select name="Visibility">
-                            <option value="@Model.CommunityJoined.CommunityID">@Model.CommunityJoined.FacultyName</option>
-                            <option value="public">Public</option>
-                            @if(Model.InterestGroups != null){
-                                @foreach(var group in Model.InterestGroups){
-                                    <option value="@group.ID" >@group.Name</option>
-                                }
+                <label>
+                    Title: <input class="form-input" type="text" name="Title" placeholder="Post Title" />
+                </label>
+                <label>
+                    Post Type:
+                    <select name="PostType">
+                        <option value="Question" >Question</option>
+                        <option value="Idea">Idea</option>
+                        <option value="Study Tips">Study Tips</option>
+                        <option value="Resource Material">Resource Material</option>
+                    </select>
+                </label>
+                <label>
+                    Additional Notes:
+                    <textarea style="width:100px;height:70px;" maxlength="150" name="AdditionalMessage"></textarea>
+                </label>
+                <label>
+                    Visibility:
+                    <select name="Visibility">
+                        <option value="@Model.CommunityJoined.CommunityID">@Model.CommunityJoined.FacultyName</option>
+                        <option value="public">Public</option>
+                        @if(Model.InterestGroups != null){
+                            @foreach(var group in Model.InterestGroups){
+                                <option value="@group.ID" >@group.Name</option>
                             }
-                        </select>
-                    </label>
-                    <label>
-                        Resource Material <input type="file" name="PostFile"/>
-                    </label>
-                    <button class="signUpBtn" type="submit" >Post</button>
+                        }
+                    </select>
+                </label>
+                <label>
+                    Resource Material <input type="file" name="PostFile"/>
+                </label>
+                <button class="signUpBtn" type="submit" >Post</button>
             </fieldset>
         </form>
     </div>
@@ -51,31 +51,48 @@
         <div class="tab">
             <button id="defaultOpen" class="tablinks" onclick="openTab(event,'community')">@Model.CommunityJoined.FacultyName</button>
             <button class="tablinks" onclick="openTab(event,'public')">Public</button>
+            <button class="tablinks" onclick="openTab(event,'interestGroups')">Interest</button>
+            <button class="tablinks" onclick="openTab(event,'up-coming-events')">Upcoming events</button>
         </div>
-            @*   show the posts *@
-            <div id="community" class="tabcontent">
-                @foreach(var post in Model.Posts.Where(p => p.Visibility.Equals(Model.CommunityJoined.CommunityID)))
-                {
-                    <p>@post.Title</p>
-                    <p>@post.AdditionalMessage</p>
-                    <p>@post.PostDate</p>
-                }
-            </div>
+        @*   show the posts *@
+        <div id="community" class="tabcontent">
+            @foreach(var post in Model.Posts.Where(p => p.Visibility.Equals(Model.CommunityJoined.CommunityID)))
+            {
+                <p>@post.Title</p>
+                <p>@post.AdditionalMessage</p>
+                <p>@post.PostDate</p>
+            }
+        </div>
 
-            <div id="public" class="tabcontent">
+        <div id="public" class="tabcontent">
             @foreach (var post in Model.Posts.Where(p => p.Visibility.Equals("public")))
             {
                 <p>@post.Title</p>
                 <p>@post.AdditionalMessage</p>
                 <p>@post.PostDate</p>
             }
-            </div>
-@*             <div id="interestGroups" class="tabcontent">
-                @foreach(var post in Model.InterestGroups.Where(p => p.Users.Contains(Model.User.Uid))){
+        </div>
+        <div id="interestGroups" class="tabcontent">
+            @foreach(var post in Model.Posts.Where(p => p.Visibility != "public" && p.Visibility != Model.CommunityJoined.CommunityID)){
                 <p>@post.Title</p>
                 <p>@post.AdditionalMessage</p>
                 <p>@post.PostDate</p>
-                }
-            </div> *@
+            }
+        </div>
+        <div id="up-coming-events" class="tabcontent">
+            @if (Model.meetUps != null)
+            {
+                <div class="meet-container">
+                    @foreach (var m in Model.meetUps)
+                    {
+                        <p>@m.Name</p>
+                        <p>@m.Purpose</p>
+                        <p>@m.Date at @m.Time</p>
+                    }
+                </div>
+            }
+        </div>
     </div>
+
+
 </div>
