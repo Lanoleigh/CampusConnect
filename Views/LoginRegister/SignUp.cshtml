@@ -8,43 +8,53 @@
         @TempData["PasswordError"];
     </div>
 }
-<form method="post" asp-area="" asp-action="Register" asp-controller="LoginRegister">
-    <fieldset>
-        <legend>Register</legend>
-        <label for="Name">
-            Name: <input class="form-input" id="Name" type="text" name="Name" />
-        </label>
-        <br />
-        <label>
-            Surname: <input class="form-input" id="Surname" type="text" name="Surname" />
-        </label>
-        <br />
-        <label>
-            Email: <input class="form-input" id="Email" type="email" name="Email" />
-        </label>
-        <br />
-        <label>
-            Phone Number: <input class="form-input" id="PhoneNumber" type="tel" maxlength="10" name="PhoneNumber" />
-        </label>
-        <br />
-        <label>
-            Faculty: 
-            <select name="Faculty" class="form-input">
-                <option selected value="C001">IIE Faculty of Commerce</option>
-                <option value="C002">IIE Faculty of Humanities</option>
-                <option value="C003">IIE Faculty of Law</option>
-                <option value="C004">IIE Faculty of Education</option>
-                <option value="C005">IIE Faculty of Science and Technology</option>
-            </select>
-        </label>
-        <br />
-        <label>
-            Password: <input class="form-input" id="Password" type="password" name="Password" />
-        </label>
-        <br />
-        <label>
-            Confirmed Password: <input class="form-input" id="Password" type="password" name="ConfirmedPassword" />
-        </label>
-    </fieldset>
-    <button type="submit">Register</button>
-</form>
+<head>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Campus_Connect.styles.css" asp-append-version="true" />
+</head>
+<div class="body">
+    <form class="reg-form" method="post" asp-area="" asp-action="Register" asp-controller="LoginRegister">
+        <fieldset>
+            <legend>Register</legend>
+            <label for="Name">
+                Name: <input class="form-input" id="Name" type="text" name="Name" />
+            </label>
+        
+            <label>
+                Surname: <input class="form-input" id="Surname" type="text" name="Surname" />
+            </label>
+   
+            <label>
+                Email: <input class="form-input" id="Email" type="email" name="Email" />
+            </label>
+      
+            <label>
+                Phone Number: <input class="form-input" id="PhoneNumber" type="tel" maxlength="10" name="PhoneNumber" />
+            </label>
+
+            <label>
+                Faculty:
+                <select name="Faculty" class="form-input">
+                    <option selected value="C001">IIE Faculty of Commerce</option>
+                    <option value="C002">IIE Faculty of Humanities</option>
+                    <option value="C003">IIE Faculty of Law</option>
+                    <option value="C004">IIE Faculty of Education</option>
+                    <option value="C005">IIE Faculty of Science and Technology</option>
+                </select>
+            </label>
+      
+            <label>
+                Password: <input class="form-input" id="Password" type="password" name="Password" />
+            </label>
+          
+            <label>
+                Confirmed Password: <input class="form-input" id="Password" type="password" name="ConfirmedPassword" />
+            </label>
+        </fieldset>
+        <button type="submit">Register</button>
+    </form>
+    <a asp-area="" asp-action="Login" asp-controller="LoginRegister">Already have an account</a>
+</div>
+

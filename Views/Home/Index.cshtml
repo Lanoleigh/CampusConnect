@@ -1,3 +1,20 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = null;
 }
+<head>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Campus_Connect.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="nav-container">
+        <a class="cc-btns" asp-area="" asp-controller="LoginRegister" asp-action="SignUp">
+            Sign Up
+        </a>
+        <a class="cc-btns" asp-area="" asp-controller="LoginRegister" asp-action="Login">
+            Login
+        </a>
+
+</div>
+</body>

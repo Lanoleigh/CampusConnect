@@ -51,7 +51,7 @@ namespace Campus_Connect.Services
                 }
 
 
-                var meetU = await _db.Child("MeetUps").OnceAsync<MeetUp>();
+                var meetU = await _db.Child("Meetup").OnceAsync<MeetUp>();
                 List<MeetUp> meetUps = new List<MeetUp>();
 
                  meetUps = meetU

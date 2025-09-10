@@ -66,7 +66,7 @@ namespace Campus_Connect.Services
                     .ToList();
 
 
-            var allMeetUps = await _db.Child("MeetUps").OnceAsync<MeetUp>();
+            var allMeetUps = await _db.Child("Meetup").OnceAsync<MeetUp>();
             
             var meetUps = allMeetUps
                 .Select(m => m.Object)

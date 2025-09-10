@@ -12,4 +12,11 @@
         public string ConfirmedPassword { get; set; }
 
     }
+    public class FirebaseUser
+    {
+        public string uId { get; set; }
+        public string Email { get; set; }
+        public string DisplayName { get; set; }
+
+    }
 }

@@ -7,7 +7,10 @@
 @model Campus_Connect.ViewModels.CommunityViewModel
 
 <div class="feed-page">
-    <div class="add-post-column">
+    <div class="add-post-toggle">
+        <button id="showAddPostBtn" >Add Post</button>
+
+        <div class="add-post-column" id="addPostForm">
         <form enctype="multipart/form-data" method="post" asp-action="CreateNewPost" asp-controller="Post">
             <fieldset>
                 <legend>Add a new post</legend>
@@ -46,6 +49,7 @@
             </fieldset>
         </form>
     </div>
+    </div>
     <hr />
     <div class="Posts-container">
         <div class="tab">
@@ -58,29 +62,84 @@
         <div id="community" class="tabcontent">
             @foreach(var post in Model.Posts.Where(p => p.Visibility.Equals(Model.CommunityJoined.CommunityID)))
             {
-                <p>@post.Title</p>
-                <p>@post.AdditionalMessage</p>
-                <p>@post.PostDate</p>
+                <div class="tab-card">
+                    <h5>@post.Title</h5>
+                    <p>@post.PostType</p>
+                    <p>@post.AdditionalMessage</p>
+                    <p>@post.PostDate</p>
+                    @if(post.FileUrl != null){
+                        <a href="@post.FileUrl" target="_black" rel="noopener noreferrer">Download resource</a>
+                    }
+                    else
+                    {
+                        <p>No media attached</p>
+                    }
+                </div>
+
             }
         </div>
 
         <div id="public" class="tabcontent">
             @foreach (var post in Model.Posts.Where(p => p.Visibility.Equals("public")))
             {
-                <p>@post.Title</p>
-                <p>@post.AdditionalMessage</p>
-                <p>@post.PostDate</p>
+                <div class="tab-card">
+                    <h5>@post.Title</h5>
+                    <p>@post.PostType</p>
+                    <p>@post.AdditionalMessage</p>
+                    <p>@post.PostDate</p>
+                    @if (post.FileUrl != null)
+                    {
+                        <a href="@post.FileUrl" target="_black" rel="noopener noreferrer">Download resource</a>
+                    }
+                    else
+                    {
+                        <p>No media attached</p>
+                    }
+                </div>
             }
         </div>
         <div id="interestGroups" class="tabcontent">
-            @foreach(var post in Model.Posts.Where(p => p.Visibility != "public" && p.Visibility != Model.CommunityJoined.CommunityID)){
-                <p>@post.Title</p>
-                <p>@post.AdditionalMessage</p>
-                <p>@post.PostDate</p>
+            @foreach(var post in Model.Posts.Where(p => p.Visibility != "public" && p.Visibility != Model.CommunityJoined.CommunityID && Model.InterestGroups.Select(i => i.ID).Contains(p.Visibility))){
+                <div class="tab-card">
+                    <h5>@post.Title</h5>
+                    <p>@post.PostType</p>
+                    <p>@post.AdditionalMessage</p>
+                    <p>@post.PostDate</p>
+                    @if (post.FileUrl != null)
+                    {
+                        <a href="@post.FileUrl" target="_black" rel="noopener noreferrer">Download resource</a>
+                    }
+                    else
+                    {
+                        <p>No media attached</p>
+                    }
+                </div>
             }
         </div>
         <div id="up-coming-events" class="tabcontent">
-            @if (Model.meetUps != null)
+            <button id="myBtn">Schedule meet up</button>
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times</span>
+                    <form asp-action="scheduleMeetUp" method="post">
+                        <input name="Name" type="text" placeholder="Name"/>
+                        <input name="Purpose" type="text" placeholder="Purpose"/>
+                        <select name="relatedID">
+                            <option value="@Model.CommunityJoined.CommunityID" >@Model.CommunityJoined.FacultyName</option>
+                            @if(Model.InterestGroups != null){
+                                @foreach(var i in Model.InterestGroups){
+                                    <option value="@i.ID" >@i.Name</option>
+                                }
+                            }
+                        </select>
+                        <textarea name="Description" placeholder="Additional notes to be added such as venue "></textarea>
+                        <input type="Date" name="Date"/>
+                        <input type="time" name="Time"/>
+                        <button type="submit">Schedule it</button>
+                    </form>
+                </div>
+            </div>
+            @if (Model.meetUps.Count > 0)
             {
                 <div class="meet-container">
                     @foreach (var m in Model.meetUps)
@@ -88,11 +147,36 @@
                         <p>@m.Name</p>
                         <p>@m.Purpose</p>
                         <p>@m.Date at @m.Time</p>
+                        @if (!m.Members.ContainsKey(Model.User.Uid))
+                        {
+                            <form method="post" asp-action="attendMeetUp" asp-route-meetUpId="@m.MeetUpId" asp-route-userId="@Model.User.Uid">
+                                <button type="submit">Attend</button>
+                            </form>
+                        }else{
+                            <button disabled>Already attending</button>
+                        }
                     }
                 </div>
+            }else{
+                <p>No upcoming events</p>
             }
         </div>
     </div>
 
 
 </div>
+<script>
+    const showBtn = document.getElementById('showAddPostBtn');
+    const formDiv = document.getElementById('addPostForm');
+
+    showBtn.addEventListener('click', () => {
+        if(formDiv.style.display === 'none' || formDiv.style.display === ''){
+            formDiv.style.display = 'block';
+            showBtn.textContent = 'Hide Post Form';
+        } else {
+            formDiv.style.display = 'none';
+            showBtn.textContent = 'Add Post';
+        }
+    });
+
+</script>

@@ -102,37 +102,135 @@ body {
     background-color:#7ed957;
 }
 /*Regiter form*/
+.body {
+    display: flex;
+    justify-content: center; /* centers horizontally */
+    align-items: center; /* centers vertically */
+    margin: 0;
+}
+.reg-form {
+    padding: 30px;
+    background-color: rgba(255,255,255,0.95); /* slightly transparent */
+    border-radius: 12px;
+    width: 400px;
+    max-width: 90%; /* responsive on mobile */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
 
+    .reg-form fieldset {
+        border: none;
+        padding: 0;
+        margin-bottom: 15px;
+    }
+
+    .reg-form legend {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .reg-form label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 500;
+    }
+
+    .reg-form input,
+    .reg-form select {
+        width: 100%;
+        padding: 8px 10px;
+        margin-top: 4px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1em;
+    }
+
+    .reg-form button {
+        width: 100%;
+        padding: 12px;
+        background-color: #004aad;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .reg-form button:hover {
+            background-color: #00337a;
+        }
 /*Feed page*/
-fieldset {
+.add-post-column fieldset {
     border: 1px #7ed957 solid;
-    padding: 5px;
-    text-align:center;
+    padding: 15px;
     border-radius: 30px;
 }
-.feed-page{
-    display:flex;
+.add-post-column legend{
+    font-weight:bold;
+    font-size:1.2rem;
+}
+.add-post-column label{
+    display:block;
+    margin-bottom:10px;
+    font-weight:500;
+}
+.add-post-column input,
+.add-post-column select{
+    width: 100%;
+    padding: 8px 10px;
+    border-radius:6px;
+    border: 1px solid #ccc;
+    font-size:1rem;
+}
+.add-post-column textarea{
+    width:100%;
+    max-width:200px;
+    max-height:100px;
+}
+.add-post-column button.signUpBtn {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+}
+.feed-page {
+    display: flex;
     gap: 2rem;
+    flex-wrap: wrap;
+    padding: 20px;
 }
 .add-post-column{
-    padding:10px;
-    display:block;
-    position:relative;
-    width:30%;
+    background-color: #fff;
+    padding:20px;
+    flex:1 1 300px;
+    flex: 1 1 300px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius:12px;
 }
 /*Tab styling*/
 .tab{
     overflow:hidden;
     border: 1px solid #ccc;
+    margin-bottom:15px;
 }
 .tab button{
+    background-color: #f2f4f8;
     float:left;
+    padding: 10px 16px;
+    font-weight:bold;
+    margin-right:5px;
+    border-radius: 8px 8px 0 0;
     border:none;
     cursor:pointer;
     transition: .2s;
 }
 .tab button:hover{
-    background-color: #7ed957;
+    background-color: #ccc;
+    color:black;
 }
 .tab button.active{
     background-color: #7ed957;
@@ -142,7 +240,64 @@ fieldset {
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
+    height:400px;
+    overflow-y:auto;
+    overflow-x:hiden;
+    scrollbar-width:thin;
+    background-color:white;
 }
+
+/* Tab card styling */
+.tab-card {
+    background-color: #ccc; /* white background */
+    border-radius: 12px; /* rounded corners */
+    padding: 20px; /* spacing inside the card */
+    margin: 15px 0; /* spacing between cards */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* subtle shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-left: 5px solid #7ed957; /* accent border on the left */
+}
+
+    /* Hover effect */
+    .tab-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Titles */
+    .tab-card h5 {
+        margin-top: 0;
+        margin-bottom: 8px;
+        font-size: 1.2rem;
+        color: #333333;
+    }
+
+    /* Paragraphs */
+    .tab-card p {
+        margin: 4px 0;
+        color: #555555;
+        line-height: 1.4;
+        font-size: 0.95rem;
+    }
+
+    /* File download link */
+    .tab-card a {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 8px 12px;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: background-color 0.2s ease;
+    }
+
+        .tab-card a:hover {
+            background-color: #0056b3;
+        }
+
+
 /*styling for interestGroups*/
 .group-card {
     background-color: #ffffff; /* white card background */
@@ -199,3 +354,191 @@ fieldset {
         cursor: default;
         opacity: 0.9;
     }
+/*modal styling*/
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+body{
+    background-image : url('/images/background3.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position:center;
+    justify-content:center;
+    align-items:center;
+ 
+}
+/*index styling*/
+.cc-btns{
+    border:none;
+    padding: 10px;
+    text-decoration:none;
+    color:black;
+    position:relative;
+}
+.cc-btns:hover{
+    cursor:pointer;
+    transform:scale(1.2);
+    color:#004aad;
+}
+.nav-container{
+    padding:20px;
+    border-radius:10px;
+    width:fit-content;
+    height:fit-content;
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    text-align:center;
+    background-color:white;
+}
+.meet-container{
+    background-color:white;
+    padding: 10px;
+    border-radius: 10px;
+}
+#showAddPostBtn{
+    display:none;
+}
+#addPostForm{
+    display:block;
+}
+/*Mobile styling*/
+@media(orientation:portrait){
+
+    .nav-container{
+        position:relative;
+        margin:auto;
+        padding:20px;
+    }
+    #showAddPostBtn {
+        display: block;
+        margin-bottom: 10px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    #addPostForm{
+        display:none;
+    }
+}
+@media (max-width:768px) {
+    #showAddPostBtn{
+        display:block
+    }
+    .tab{
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+    .tab button{
+        float:none;
+        display:inline-block;
+        min-width: 120px;
+        margin: 5px 2px;
+        font-size: 0.9rem;
+    }
+    .feed-page{
+        flex-direction:column;
+    }
+    .add-post-column{
+        width:100%;
+    }
+    .Posts-container{
+        width:100%;
+    }
+}
+/*vertical side bar nav*/
+
+.navbar-nav {
+    flex-direction: row;
+}
+
+@media(orientation:portrait),(max-width:768) {
+
+    body {
+        margin:0;
+    }
+
+    .navbar {
+        width: 200px;
+        height: 100vh;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding-top: 1rem;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        overflow-y:auto;
+        transition:transform .3s ease;
+        z-index: 1000;
+        transform:translateX(-200px);
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+    }
+
+    .navbar .nav-item {
+        margin: 0.5rem 0;
+    }
+
+    #toggleSidebar {
+        position: fixed;
+        top: 10px;
+        left: 8px;
+        z-index: 1100;
+        background-color: #555555;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+        #toggleSidebar:hover {
+            background-color: #0056b3;
+        }
+        .navbar.expanded{
+            transform:translateX(0);
+        }
+}
+
+.navbar.collapsed {
+    transform: translateX(-200px);
+}

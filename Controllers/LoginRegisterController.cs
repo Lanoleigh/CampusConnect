@@ -41,7 +41,7 @@ namespace Campus_Connect.Controllers
             var LoggedInUserId = decoded.Uid;
             HttpContext.Session.SetString("uId", LoggedInUserId);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Feed", "Post");
 
         }
         public IActionResult SignUp()

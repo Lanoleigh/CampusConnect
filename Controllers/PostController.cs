@@ -75,6 +75,47 @@ namespace Campus_Connect.Controllers
 
             return RedirectToAction("Feed");
         }
+        [HttpPost]
+        public async Task<IActionResult> scheduleMeetUp(MeetUp meetup)
+        {
+            try
+            {
+                string userId = HttpContext.Session.GetString("uId");
+                meetup.Members ??= new Dictionary<string, bool>();
+               
+                meetup.Members[userId] = true;
+                var result = await _db.Child("Meetup").PostAsync(meetup);
+                meetup.MeetUpId = result.Key;
+                if (!string.IsNullOrEmpty(result.Key))
+                {
+                    await _db.Child("Meetup").Child(result.Key).PutAsync(meetup);
+                }
 
+                TempData["SuccessMessage"] = "You have scheduled a meet up";
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return RedirectToAction("Feed");
+        }
+        [HttpPost]
+        public async Task<IActionResult> attendMeetUp(string meetUpId, string userId)
+        {
+            try
+            {
+                await _db
+                    .Child("Meetup")
+                    .Child(meetUpId)
+                    .Child("Members")
+                    .Child(userId)
+                    .PutAsync(true);
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return RedirectToAction("Feed");
+        }
     }
 }
