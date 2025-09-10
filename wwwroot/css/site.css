@@ -70,6 +70,7 @@ body {
     padding:7px;
     width:150px;
     margin-bottom:6px;
+    border-radius:3px;
 }
 .login-img{
     width:500px;
@@ -101,3 +102,44 @@ body {
     background-color:#7ed957;
 }
 /*Regiter form*/
+
+/*Feed page*/
+fieldset {
+    border: 1px #7ed957 solid;
+    padding: 5px;
+    text-align:center;
+    border-radius: 30px;
+}
+.feed-page{
+    display:flex;
+    gap: 2rem;
+}
+.add-post-column{
+    padding:10px;
+    display:block;
+    position:relative;
+    width:30%;
+}
+/*Tab styling*/
+.tab{
+    overflow:hidden;
+    border: 1px solid #ccc;
+}
+.tab button{
+    float:left;
+    border:none;
+    cursor:pointer;
+    transition: .2s;
+}
+.tab button:hover{
+    background-color: #7ed957;
+}
+.tab button.active{
+    background-color: #7ed957;
+}
+.tabcontent{
+    display:none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}

@@ -58,19 +58,14 @@ namespace Campus_Connect.Controllers
                     newPost.FileUrl = $"https://firebasestorage.googleapis.com/v0/b/{bucket}/o/{Uri.EscapeDataString(fileName)}?alt=media";
                     
                 }
-                var PostData = new
-                {
-                    newPost.Title,
-                    newPost.PostType,
-                    newPost.AdditionalMessage,
-                    newPost.Visibility,
-                    newPost.FileUrl,
-                };
-                await _db.Child("Posts").PostAsync(PostData);
+                newPost.PostDate = DateTime.Now;
+                await _db.Child("Posts")
+                    .PostAsync(newPost);
             }
 
 
-            return Redirect(returnUrl);
+            return RedirectToAction("Feed");
         }
+
     }
 }

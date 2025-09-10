@@ -44,14 +44,34 @@ namespace Campus_Connect.Services
             var interstGroups = await _db
                 .Child("InterestGroups")
                 .OnceAsListAsync<InterestGroup>();
-           List<InterestGroup> myGroups = interstGroups
+           List<InterestGroup> iGroups = interstGroups
                 .Select(group => group.Object)
                 .ToList();
+
+            List<InterestGroup> myGroups = new List<InterestGroup>();
+            foreach(var intGroup in iGroups)
+            {
+                if (intGroup.Users.Contains(userID))
+                {
+                    myGroups.Add(intGroup);
+                }
+            }
+           
+                var posts = await _db
+                    .Child("Posts")
+                    .OnceAsync<Post>();
+                List<Post> allPosts = posts
+                    .Select(post => post.Object)
+                    .ToList();
+
+               
+
 
 
             commVM.User = currentUser;
             commVM.CommunityJoined = joinedCommunity;
             commVM.InterestGroups = myGroups;//return all interest groups and we can filter it afterwards
+            commVM.Posts = allPosts;
 
 
             return commVM;
