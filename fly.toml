@@ -1,0 +1,22 @@
+app = "campus-connect"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
+PORT = "8080"
+
+[experimental]
+auto_rollback = true
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
